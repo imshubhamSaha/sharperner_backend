@@ -5,19 +5,13 @@ const requestHandler = (req, res) => {
   const method = req.method;
   const body = [];
   if (url === "/") {
-    fs.readFile("message.txt", { encoding: "utf-8" }, (err, data) => {
-      if (err) {
-        console.log(err);
-      }
-      res.write("<html>");
-      res.write("<head><title>Enter Message</title></head>");
-      res.write(`<body>${data}</body>`);
-      res.write(
-        `<body><form action="/message" method="POST"><input type="text" name="message"><button type="submit">Send</button></form></body>`
-      );
-      res.write("</html>");
-      return res.end();
-    });
+    res.write("<html>");
+    res.write("<head><title>Enter Message</title></head>");
+    res.write(
+      `<body><form action="/message" method="POST"><input type="text" name="message"><button type="submit">Send</button></form></body>`
+    );
+    res.write("</html>");
+    return res.end();
   } else if (url === "/message" && method === "POST") {
     req.on("data", (chunk) => {
       body.push(chunk);
@@ -42,4 +36,11 @@ const requestHandler = (req, res) => {
   }
 };
 
-module.exports = requestHandler;
+// module.exports = requestHandler;
+// module.exports = {
+//   handler: requestHandler,
+//   text: "some dummy text",
+// };
+
+exports.handler = requestHandler;
+exports.text = "some dummy text";
