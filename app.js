@@ -1,8 +1,20 @@
-const http = require("http");
+// const http = require("http");
 
-const routes = require("./routes");
+const express = require("express");
 
-const server = http.createServer(routes.handler);
-console.log(routes.text);
+const app = express();
 
-server.listen(3000);
+app.use((req, res, next) => {
+  console.log("In the Middle ware");
+  next();
+});
+app.use((req, res, next) => {
+  console.log("In the another Middle ware");
+  //   res.send({ key1: "value" });
+  res.send("<h1> hello to node js </h1>");
+});
+
+app.listen(3000);
+// const server = http.createServer(app);
+
+// server.listen(3000);
